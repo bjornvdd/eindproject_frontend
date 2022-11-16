@@ -14,7 +14,7 @@
     <div x-data="{
         responsedata: null,
         async getData() {
-            this.responsedata = await (await fetch('http://127.0.0.1:8000/teams')).json();
+            this.responsedata = await (await fetch('https://soccer-service-bjornvdd.cloud.okteto.net/teams')).json();
         }
     }">
         <button x-on:click="getData">Send get request</button>
@@ -33,7 +33,7 @@
     <div x-data="{
         responsedata: null,
         async getData() {
-            this.responsedata = await (await fetch('http://127.0.0.1:8000/player/Cristiano')).json();
+            this.responsedata = await (await fetch('https://soccer-service-bjornvdd.cloud.okteto.net/player/Cristiano')).json();
         }
     }">
         <button x-on:click="getData">Send get request</button>
