@@ -14,7 +14,7 @@
     <div x-data="{
         responsedata: null,
         async getData() {
-            this.responsedata = await (await fetch('https://soccer-service-bjornvdd.cloud.okteto.net/teams/1')).json();
+            this.responsedata = await (await fetch('https://soccer-service-bjornvdd.cloud.okteto.net/teams/2')).json();
         }
     }">
         <button x-on:click="getData">Send get request</button>
