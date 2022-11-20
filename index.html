@@ -14,7 +14,7 @@
     <div x-data="{
         responsedata: null,
         async getData() {
-            this.responsedata = await (await fetch('https://soccer-service-bjornvdd.cloud.okteto.net/teams')).json();
+            this.responsedata = await (await fetch('https://soccer-service-bjornvdd.cloud.okteto.net/teams/1')).json();
         }
     }">
         <button x-on:click="getData">Send get request</button>
@@ -75,7 +75,7 @@
 
            
         },
-    }x-init=soccerPlayer">
+    }">
     <div>
         <label>Voornaam:</label>
         <input type="text" x-model="first_name"/>
