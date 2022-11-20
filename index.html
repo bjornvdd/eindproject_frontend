@@ -19,10 +19,10 @@
     }">
         <button x-on:click="getData">Send get request</button>
         <dl>
-        <dt>Team naam:</dt> <dd><strong x-text="responsedata[0].team_name">Placeholder</strong></dd>
-        <dt>Kapitein:</dt><dd><strong x-text="responsedata[0].captain_team">Placeholder</strong></dd>
-        <dt>Gespeelde wedstrijden:</dt><dd><strong x-text="responsedata[0].played_games">Placeholder</strong></dd>
-        <dt>Ranking:</dt><dd><strong x-text="responsedata[0].ranking">Placeholder</strong></dd>
+        <dt>Team naam:</dt> <dd><strong x-text="responsedata.team_name">Placeholder</strong></dd>
+        <dt>Kapitein:</dt><dd><strong x-text="responsedata.captain_team">Placeholder</strong></dd>
+        <dt>Gespeelde wedstrijden:</dt><dd><strong x-text="responsedata.played_games">Placeholder</strong></dd>
+        <dt>Ranking:</dt><dd><strong x-text="responsedata.ranking">Placeholder</strong></dd>
         </dl>
     </div>
     
