@@ -12,7 +12,7 @@
     Zoals jullie kunnen zien heb ik een API gemaakt rond het onderwerp "voetbal".</p>
 
     <hr>
-    <h3>Token aanmaken: (eerst player aanmaken)</h3>
+    <h3>Token aanmaken: (eerst player creëren)</h3>
     <div x-data="{
         token: null,
         email: null,
@@ -240,7 +240,7 @@
     </div>
 
     <hr>
-    <h3>Make team</h3>
+    <h3>Post-request: team aanmaken</h3>
     <div x-data="{
         responsedata: null,
         team_name: null,
@@ -298,7 +298,7 @@
     </div>
 
 <hr>
-    <h3>Make Stadium</h3>
+    <h3>Post-request: stadium aanamken</h3>
     <div x-data="{
         responsedata: null,
         stadium_name: null,
@@ -345,8 +345,8 @@
      
         <button x-on:click="createTeam">Call method</button>
 
-        <p><strong>Aangemaakte team (POST): </strong></p>
-        <p>Stadion naam: <strong x-text="responsedata.stadium_name"></strong></p>
+        <p><strong>Aangemaakte stadium (POST): </strong></p>
+        <p>Stadium naam: <strong x-text="responsedata.stadium_name"></strong></p>
         <p>City: <strong x-text="responsedata.city"></strong></p>
         <p>Capacity: <strong x-text="responsedata.capacity"></strong></p>
         <p>Age: <strong x-text="responsedata.age"></strong></p>
