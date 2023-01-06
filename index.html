@@ -1,52 +1,177 @@
 <html>
 <head>
     <script defer src="https://unpkg.com/alpinejs@3.5.0/dist/cdn.min.js"></script>
+    <link integrity="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiam9ybnZkZDg5OEBnbWFpbC5jb20iLCJleHAiOjE2NzMwMzI4Njd9.CQSTzoW-bJnSnn1HiTtjNTcBI-3BR6xDhyiwCHm_zbA" crossorigin="anonymous">
     <link rel="stylesheet" href="stylesheet.css">
 </head>
+
 <body>
     <h1>Voetbal API: Bjorn Van den Dungen</h1>
-    <p>Dit is mijn front-end pagina voor het vak API development. Hier laat ik mijn verschillende GET/POST requests dynamisch zien.
+    <p class="cooler">Eindproject</p>
+    <p>Dit is mijn front-end pagina voor het vak API development. Hier laat ik mijn verschillende requests dynamisch zien.
     Zoals jullie kunnen zien heb ik een API gemaakt rond het onderwerp "voetbal".</p>
 
     <hr>
-
-    <h3>Get-request: Teams</h3>
+    <h3>Token aanmaken: (eerst player aanmaken)</h3>
     <div x-data="{
-        responsedata: null,
-        async getData() {
-            this.responsedata = await (await fetch('https://soccer-service-bjornvdd.cloud.okteto.net/teams/2')).json();
-        }
+        token: null,
+        email: null,
+        password: null,
+        async accessToken() {
+            const parameters = {grant_type: '', username: this.email, password: this.password, scope: '', client_secret: ''};
+            const getParameters = new URLSearchParams(parameters);
+            this.token = await (await fetch('https://bjorn-service-bjornvdd.cloud.okteto.net/token', 
+            {
+                method: 'POST',
+                body: getParameters,
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded',
+                    'accept': 'application/josn',
+                },
+            })).json();
+
+            console.log(this.token);
+        },
     }">
-        <button x-on:click="getData">Send get request</button>
-        <dl>
-        <dt>Team naam:</dt> <dd><strong x-text="responsedata.team_name">Placeholder</strong></dd>
-        <dt>Kapitein:</dt><dd><strong x-text="responsedata.captain_team">Placeholder</strong></dd>
-        <dt>Gespeelde wedstrijden:</dt><dd><strong x-text="responsedata.played_games">Placeholder</strong></dd>
-        <dt>Ranking:</dt><dd><strong x-text="responsedata.ranking">Placeholder</strong></dd>
-        </dl>
+    <div>
+        <label>Email: </label>
+        <input type="text" x-model="email">
+        
     </div>
+    <div>
+        <label>Password: </label>
+        <input type="password" x-model="password">
+    </div>
+
+        <button x-on:click="accessToken">Call Token</button>
+
+        <dl>
+            <dt>Token:</dt><dd><strong x-text="token.access_token">Placeholder</strong></dd>
+        </dl>
+
+    </div>
+<hr>
+
+    <h3>Get-request: Alle spelers opvragen</h3>
+    <div x-data="{
+
+        allPlayers: null,
+        token: null,
+        async getPlayers() {
+            this.allPlayers = await (await fetch('https://bjorn-service-bjornvdd.cloud.okteto.net/all/players',
+            {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + 'token',
+                    'accept': 'application/json',
+
+                },
+            })).json();
+        }
+            
+    }">
+
+        <input x-model="token" placeholder="Token Validatie">
+
+        <button x-on:click="getPlayers">Send get request</button>
+
+        <template x-for="speler in allPlayers">
+            <table>
+                <tr>
+                    <td x-text="speler.id"></td>
+                    <td x-text="speler.first_name"></td>
+                    <td x-text="speler.last_name"></td>
+                    <td x-text="speler.email"></td>
+                    <td x-text="speler.number"></td>
+                    <td x-text="speler.birth_date"></td>
+                  
+                </tr>
+            </table>
+
+        </template>
+    </div>
+<hr>
+
+    <h3>Get-request: Alle teams opvragen</h3>
+    <div x-data="{
+
+        allTeams: null,
+        token: null,
+        async getTeams() {
+            this.allTeams = await (await fetch('https://bjorn-service-bjornvdd.cloud.okteto.net/all/teams',
+            {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + 'token',
+                    'accept': 'application/json',
+
+                },
+            })).json();
+        }
+            
+    }">
+
+        <input x-model="token" placeholder="Token Validatie">
+
+        <button x-on:click="getTeams">Send get request</button>
+
+        <template x-for="team in allTeams">
+            <table>
+                <tr>
+                    <td x-text="team.id"></td>
+                    <td x-text="team.team_name"></td>
+                    <td x-text="team.captain_team"></td>
+                    <td x-text="team.played_games"></td>
+                    <td x-text="team.ranking"></td>
+                  
+                </tr>
+            </table>
+
+        </template>
+    </div>
+
+<hr>
     
-
-    <hr>
-
-    <h3>Get-request: Speler</h3>
+    <h3>Get-request: Alle stadiums opvragen</h3>
     <div x-data="{
-        responsedata: null,
-        async getData() {
-            this.responsedata = await (await fetch('https://soccer-service-bjornvdd.cloud.okteto.net/player/Cristiano')).json();
+
+        allStadiums: null,
+        token: null,
+        async getStadiums() {
+            this.allStadiums = await (await fetch('https://bjorn-service-bjornvdd.cloud.okteto.net/all/stadiums',
+            {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + 'token',
+                    'accept': 'application/json',
+
+                },
+            })).json();
         }
+            
     }">
-        <button x-on:click="getData">Send get request</button>
-        <dl>
-        <dt>Voornaam:</dt><dd><strong x-text="responsedata.first_name">Placeholder</strong></dd>
-        <dt>Achternaam: </dt><dd><strong x-text="responsedata.last_name">Placeholder</strong></dd>
-        <dt>Emailadres:</dt> <dd><strong x-text="responsedata.email">Placeholder</strong></dd>
-        <dt>Spelernummer:</dt><dd> <strong x-text="responsedata.number">Placeholder</strong></dd>
-        <dt>Geboortedatum: </dt><dd><strong x-text="responsedata.birth_date">Placeholder</strong></dd>
-        </dl>
+
+        <input x-model="token" placeholder="Token Validatie">
+
+        <button x-on:click="getStadiums">Send get request</button>
+
+        <template x-for="stadium in allStadiums">
+            <table>
+                <tr>
+                    <td x-text="stadium.id"></td>
+                    <td x-text="stadium.stadium_name"></td>
+                    <td x-text="stadium.city"></td>
+                    <td x-text="stadium.capacity"></td>
+                    <td x-text="stadium.age"></td>
+                  
+                </tr>
+            </table>
+
+        </template>
     </div>
 
     <hr>
+
 
     <h3>Post-request: Speler aanmaken</h3>
     
@@ -57,8 +182,9 @@
         email: null,
         number: null,
         birth_date: null,
+        password: null,
         async soccerPlayer() {
-            this.responsedata = await (await fetch('https://soccer-service-bjornvdd.cloud.okteto.net/make/player', 
+            this.responsedata = await (await fetch('https://bjorn-service-bjornvdd.cloud.okteto.net/make/player', 
             {
                 method: 'POST',
                 body: JSON.stringify({
@@ -66,9 +192,12 @@
                     last_name: this.last_name,
                     email: this.email,
                     number: this.number,
-                    birth_date: this.birth_date
+                    birth_date: this.birth_date,
+                    password: this.password
                 }),
                 headers: {
+                    'Authorization': 'Bearer ' + 'token',
+                    'accept': 'application/json',
                     'Content-type': 'application/json; charset=UTF-8',
                 },
             })).json();
@@ -96,6 +225,7 @@
         <label>Geboortedatum: </label>
         <input type="text" x-model="birth_date"/>
     </div>
+   
         
         <button x-on:click="soccerPlayer">Call Post-request</button>
 
@@ -105,7 +235,127 @@
         <p>Email: <strong x-text="responsedata.email"></strong></p>
         <p>Nummer: <strong x-text="responsedata.number"></strong></p>
         <p>Geboortedatum: <strong x-text="responsedata.birth_date"></strong></p>
+        
 
     </div>
+
+    <hr>
+    <h3>Make team</h3>
+    <div x-data="{
+        responsedata: null,
+        team_name: null,
+        captain_team: null,
+        played_games: null,
+        ranking: null,
+        async createTeam() {
+            this.responsedata = await (await fetch('https://bjorn-service-bjornvdd.cloud.okteto.net/make/team', 
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    team_name: this.team_name,
+                    captain_team: this.captain_team,
+                    played_games: this.played_games,
+                    ranking: this.ranking,
+                }),
+                headers: {
+                    'Authorization': 'Bearer ' + 'token',
+                    'accept': 'application/json',
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })).json();
+
+            
+        },
+    }">
+
+    <div>
+        <label>Team naam:</label>
+        <input type="text" x-model="team_name"/>
+    </div>
+    <div>
+        <label>Captain:</label>
+        <input type="text" x-model="captain_team"/>
+    </div>
+    <div>
+        <label>Games:</label>
+        <input type="text" x-model="played_games"/>
+    </div>
+    <div>
+        <label>Ranking:</label>
+        <input type="text" x-model="ranking"/>
+    </div>
+     
+        <button x-on:click="createTeam">Call method</button>
+
+        <p><strong>Aangemaakte team (POST): </strong></p>
+        <p>Team naam: <strong x-text="responsedata.team_name"></strong></p>
+        <p>Captain: <strong x-text="responsedata.captain_team"></strong></p>
+        <p>Games: <strong x-text="responsedata.played_games"></strong></p>
+        <p>Ranking: <strong x-text="responsedata.ranking"></strong></p>
+    
+       
+
+    </div>
+
+<hr>
+    <h3>Make Stadium</h3>
+    <div x-data="{
+        responsedata: null,
+        stadium_name: null,
+        city: null,
+        capacity: null,
+        age: null,
+        async createTeam() {
+            this.responsedata = await (await fetch('https://bjorn-service-bjornvdd.cloud.okteto.net/make/stadium', 
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    stadium_name: this.stadium_name,
+                    city: this.city,
+                    capacity: this.capacity,
+                    age: this.age,
+                }),
+                headers: {
+                    'Authorization': 'Bearer ' + 'token',
+                    'accept': 'application/json',
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })).json();
+
+            
+        },
+    }">
+
+    <div>
+        <label>Stadion naam:</label>
+        <input type="text" x-model="stadium_name"/>
+    </div>
+    <div>
+        <label>City:</label>
+        <input type="text" x-model="city"/>
+    </div>
+    <div>
+        <label>Capacity:</label>
+        <input type="text" x-model="capacity"/>
+    </div>
+    <div>
+        <label>Age:</label>
+        <input type="text" x-model="age"/>
+    </div>
+     
+        <button x-on:click="createTeam">Call method</button>
+
+        <p><strong>Aangemaakte team (POST): </strong></p>
+        <p>Stadion naam: <strong x-text="responsedata.stadium_name"></strong></p>
+        <p>City: <strong x-text="responsedata.city"></strong></p>
+        <p>Capacity: <strong x-text="responsedata.capacity"></strong></p>
+        <p>Age: <strong x-text="responsedata.age"></strong></p>
+    
+       
+
+    </div>
+    
+    
+    
 </body>
 </html>
