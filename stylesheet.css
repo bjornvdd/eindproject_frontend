@@ -4,17 +4,21 @@ h1 {
 }
 
 body {
-    max-width: 800px;
+    max-width: 1000px;
     background-color: rgb(167, 161, 161);
     margin:auto;
     border: 5px solid black;
 }
+.cooler {
+    text-align: center;
+    font-weight: bold;
+}
 
 html {
-    background-image: url(https://images.pexels.com/photos/1657332/pexels-photo-1657332.jpeg?cs=srgb&dl=pexels-mart%C3%AD-pardo-1657332.jpg&fm=jpg&_gl=1*3qu5d8*_ga*ODg1MTE4MTgzLjE2Njg0NjYxNTc.*_ga_8JE65Q40S6*MTY2ODQ2NjE1Ny4xLjEuMTY2ODQ2Njc5NC4wLjAuMA..);
+    background-image: url(https://images.pexels.com/photos/8892/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
     background-attachment: fixed;
     background-position: 0%;
-    background-size: 50%;   
+    background-size: 100%;   
 }
 
 div {
@@ -30,11 +34,13 @@ p {
 }
 
 dd {
-    margin: 0px;
+    margin: auto;
+    
 }
 
 dt {
     margin-top:10px;
+   
 }
 
 button {
@@ -46,4 +52,12 @@ button {
 button:active{
     box-shadow: 0 3px black;
     transform: translateY(4px);
+}
+
+
+
+table, td, th {
+    border-collapse: collapse;
+    margin: 15px;
+    padding: 10px;
 }
